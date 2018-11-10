@@ -188,9 +188,10 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     private Node removeMin(Node node) {
         if(node.left == null){
-            Node right = node.right;
+            Node rightNode = node.right;
             node.right = null;
-            return right;
+            size --;
+            return rightNode;
         }
         node.left = removeMin(node.left);
         return node;
@@ -204,12 +205,49 @@ public class BinarySearchTree<E extends Comparable<E>> {
 
     private Node removeMax(Node node) {
         if(node.right == null){
-            Node left = node.left;
+            Node leftNode = node.left;
             node.left = null;
-            return left;
+            size --;
+            return leftNode;
         }
         node.right = removeMax(node.right);
         return node;
+    }
+
+    public void remove(E e){
+       root = remove(root,e);
+    }
+
+    private Node remove(Node node, E e) {
+        if(node == null){
+            return null;
+        }else if(e.compareTo(node.e) < 0){
+            node.left = remove(node.left,e);
+            return node;
+        }else if(e.compareTo(node.e) > 0){
+            node.right = remove(node.right,e);
+            return node;
+        }else{
+            if(node.left == null){
+                Node rightNode = node.right;
+                node.right =  null;
+                size --;
+                return rightNode;
+            }
+            if(node.right == null){
+                Node leftNode = node.left;
+                node.left =  null;
+                size --;
+                return leftNode;
+            }
+            //左右节点都不为空的情况
+            Node successor = minimum(node.right);// 该节点的右子树中最小节点
+            successor.right = removeMin(node.right);
+            successor.left = node.left;
+
+            node.left = node.right = null;
+            return successor;
+        }
     }
 
 }

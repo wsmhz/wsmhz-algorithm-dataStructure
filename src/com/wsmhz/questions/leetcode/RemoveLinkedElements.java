@@ -1,7 +1,5 @@
 package com.wsmhz.questions.leetcode;
 
-import java.util.List;
-
 /**
  * create by tangbj on 2018/10/30
  *
