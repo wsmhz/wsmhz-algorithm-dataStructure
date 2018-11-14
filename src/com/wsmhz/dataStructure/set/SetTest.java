@@ -1,7 +1,7 @@
 package com.wsmhz.dataStructure.set;
 
 import com.wsmhz.dataStructure.set.impl.BinarySearchTreeSet;
-import com.wsmhz.dataStructure.set.impl.FileOperation;
+import com.wsmhz.resources.FileOperation;
 import com.wsmhz.dataStructure.set.impl.LinkedListSet;
 
 import java.util.ArrayList;

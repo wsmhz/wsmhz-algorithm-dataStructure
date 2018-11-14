@@ -17,6 +17,14 @@ public class Array<E> {
         this(10);
     }
 
+    public Array(E[] arr){
+        data = (E[]) new Object[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            data[i] = arr[i];
+        }
+        size = arr.length;
+    }
+
     public void addLast(E e){
         add(size,e);
     }
@@ -122,6 +130,12 @@ public class Array<E> {
 
     public boolean isEmpty(){
         return size == 0;
+    }
+
+    public void swap(int i, int j){
+        E e = data[i];
+        data[i] = data[j];
+        data[j] = e;
     }
 
     @Override

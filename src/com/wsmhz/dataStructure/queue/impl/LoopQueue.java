@@ -4,6 +4,8 @@ import com.wsmhz.dataStructure.queue.Queue;
 
 /**
  * create by tangbj on 2018/10/23
+ *
+ * 循环队列
  */
 public class LoopQueue<E> implements Queue<E> {
 
