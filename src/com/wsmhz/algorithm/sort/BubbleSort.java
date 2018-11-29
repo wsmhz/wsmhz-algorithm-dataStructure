@@ -1,6 +1,6 @@
 package com.wsmhz.algorithm.sort;
 
-import com.wsmhz.algorithm.sort.common.Generater;
+import com.wsmhz.algorithm.common.Generater;
 
 /**
  * create by tangbj on 2018/11/28

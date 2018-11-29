@@ -1,6 +1,6 @@
 package com.wsmhz.algorithm.sort;
 
-import com.wsmhz.algorithm.sort.common.Generater;
+import com.wsmhz.algorithm.common.Generater;
 
 import java.util.Arrays;
 

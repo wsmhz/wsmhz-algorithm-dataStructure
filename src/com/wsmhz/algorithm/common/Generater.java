@@ -1,4 +1,4 @@
-package com.wsmhz.algorithm.sort.common;
+package com.wsmhz.algorithm.common;
 
 import java.util.Random;
 
