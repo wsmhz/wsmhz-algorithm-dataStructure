@@ -42,4 +42,10 @@ public class Generater {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+    public static void print(int[] arr){
+        for (int i : arr) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+    }
 }
