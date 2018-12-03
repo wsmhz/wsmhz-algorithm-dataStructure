@@ -46,6 +46,7 @@ public class BinarySearch {
     public static void main(String[] args) {
        int[] arr = Generater.getOrderedArray(8);
        System.out.println(deepSearch(arr , 5));
-        System.out.println(loopSearch(arr , 5));
+       System.out.println(loopSearch(arr , 5));
+       Generater.getIntArray();
     }
 }
