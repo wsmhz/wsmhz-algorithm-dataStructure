@@ -18,7 +18,7 @@ public class FileOperation {
     public static boolean readFile(String filename, ArrayList<String> words){
 
         if (filename == null || words == null){
-            System.out.println("filename is null or words is null");
+            System.err.println("filename is null or words is null");
             return false;
         }
 
@@ -32,11 +32,13 @@ public class FileOperation {
                 scanner = new Scanner(new BufferedInputStream(fis), "UTF-8");
                 scanner.useLocale(Locale.ENGLISH);
             }
-            else
+            else{
+                System.err.println("file not found");
                 return false;
+            }
         }
         catch(IOException ioe){
-            System.out.println("Cannot open " + filename);
+            System.err.println("Cannot open " + filename);
             return false;
         }
 
