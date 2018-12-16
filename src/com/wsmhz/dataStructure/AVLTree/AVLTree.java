@@ -151,20 +151,20 @@ public class AVLTree<K extends Comparable<K>, V> {
         // 计算平衡因子
         int balanceFactor = getBalanceFactor(node);
         // 维护平衡
-        // LL
+        // LL  插入顺序-左左
         if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0){
             return rightRotate(node);
         }
-        // RR
+        // RR   插入顺序-右右
         if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0){
             return leftRotate(node);
         }
-        // LR
+        // LR   插入顺序-左右
         if (balanceFactor > 1 && getBalanceFactor(node.left) < 0){
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
-        // RL
+        // RL   插入顺序-右左
         if (balanceFactor < -1 && getBalanceFactor(node.right) > 0){
             node.right = rightRotate(node.right);
             return leftRotate(node);
@@ -209,19 +209,6 @@ public class AVLTree<K extends Comparable<K>, V> {
         return minimum(node.left);
     }
 
-    private Node removeMin(Node node){
-
-        if(node.left == null){
-            Node rightNode = node.right;
-            node.right = null;
-            size --;
-            return rightNode;
-        }
-
-        node.left = removeMin(node.left);
-        return node;
-    }
-
     public V remove(K key){
 
         Node node = getNode(root, key);
@@ -237,34 +224,68 @@ public class AVLTree<K extends Comparable<K>, V> {
         if( node == null )
             return null;
 
+        Node retNode;
         if( key.compareTo(node.key) < 0 ){
             node.left = remove(node.left , key);
-            return node;
+            retNode = node;
         }
         else if(key.compareTo(node.key) > 0 ){
             node.right = remove(node.right, key);
-            return node;
+            retNode = node;
         }
         else{   // key.compareTo(node.key) == 0
             if(node.left == null){
                 Node rightNode = node.right;
                 node.right = null;
                 size --;
-                return rightNode;
+                retNode = rightNode;
             }
-            if(node.right == null){
+            else if(node.right == null){
                 Node leftNode = node.left;
                 node.left = null;
                 size --;
-                return leftNode;
+                retNode = leftNode;
             }
-            Node successor = minimum(node.right);
-            successor.right = removeMin(node.right);
-            successor.left = node.left;
+            else {
+                Node successor = minimum(node.right);
+                successor.right = remove(node.right, successor.key);
+                successor.left = node.left;
 
-            node.left = node.right = null;
-            return successor;
+                node.left = node.right = null;
+                retNode = successor;
+            }
         }
+        if(retNode == null)
+            return null;
+
+        // 更新height
+        retNode.height = 1 + Math.max(getHeight(retNode.left), getHeight(retNode.right));
+
+        // 计算平衡因子
+        int balanceFactor = getBalanceFactor(retNode);
+
+        // 平衡维护
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(retNode.left) >= 0)
+            return rightRotate(retNode);
+
+        // RR
+        if (balanceFactor < -1 && getBalanceFactor(retNode.right) <= 0)
+            return leftRotate(retNode);
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(retNode.left) < 0) {
+            retNode.left = leftRotate(retNode.left);
+            return rightRotate(retNode);
+        }
+
+        // RL
+        if (balanceFactor < -1 && getBalanceFactor(retNode.right) > 0) {
+            retNode.right = rightRotate(retNode.right);
+            return leftRotate(retNode);
+        }
+
+        return retNode;
     }
 
     public static void main(String[] args){
@@ -288,6 +309,11 @@ public class AVLTree<K extends Comparable<K>, V> {
             System.out.println("Frequency of PREJUDICE: " + map.get("prejudice"));
             System.out.println("is BST : " + map.isBST());
             System.out.println("is Balanced : " + map.isBalanced());
+            for(String word: words){
+                map.remove(word);
+                if(!map.isBST() || !map.isBalanced())
+                    throw new RuntimeException("Error");
+            }
         }
 
         System.out.println();
